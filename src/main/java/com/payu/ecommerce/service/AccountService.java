@@ -15,6 +15,10 @@ public class AccountService {
 	public void createAccount(Account account) {
 		accountRepository.save(account);
 	}
+	
+	public void deleteAll() {
+		accountRepository.deleteAll();
+	}
 
 	public Account getAccountWithByEmailAndPassword(String email, String password) {
 		for (Account a : accountRepository.findAll()) {

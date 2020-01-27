@@ -22,7 +22,7 @@ public class AccountController {
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/all-account")
 	public ResponseEntity<?> getAllAccounts() {
-		System.out.println(accountService.getAllAccount());
+		//System.out.println(accountService.getAllAccount());
 		if (accountService.getAllAccount().size() == 0)
 			return new ResponseEntity<>("HTTP 404", HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.ACCEPTED);

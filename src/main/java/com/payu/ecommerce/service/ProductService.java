@@ -13,16 +13,25 @@ import com.payu.ecommerce.repository.ProductRepository;
 public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	public void createProduct(Product product) {
 		productRepository.save(product);
 	}
-	
-	public List<Product> allProducts(){
+
+	public List<Product> allProducts() {
 		List<Product> products = new ArrayList<Product>();
-		for(Product p : productRepository.findAll())products.add(p);
+		for (Product p : productRepository.findAll())
+			products.add(p);
 		return products;
-		
+
 	}
-	
+
+	public Product getProductByName(String name) {
+		for (Product p : productRepository.findAll())
+			if (p.getName().equals(name))
+				return p;
+		return null;
+
+	}
+
 }

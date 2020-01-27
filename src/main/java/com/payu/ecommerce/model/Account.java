@@ -1,5 +1,7 @@
 package com.payu.ecommerce.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable{
 
 	@Id
 	@GeneratedValue
@@ -21,6 +25,8 @@ public class Account {
 	private Boolean enabled;
 	private String role;
 	private Double balance;
+	
+	@JsonIgnore
 	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Cart cart;
 
@@ -110,5 +116,8 @@ public class Account {
 		return "Account [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
 				+ ", enabled=" + enabled + ", role=" + role + ", balance=" + balance + ", cart=" + cart + "]";
 	}
+	
+	
+	
 
 }

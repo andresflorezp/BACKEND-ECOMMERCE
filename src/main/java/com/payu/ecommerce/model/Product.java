@@ -1,9 +1,16 @@
 package com.payu.ecommerce.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -11,28 +18,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name = "IdProduct")
 	private Long id;
 	private String name;
 	private String category;
 	private String description;
 	private Double price;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "cart_id")
-	private Cart cart;
 
-	public Product(Long id, String name, String category, String description, Double price, Cart cart) {
+	@JsonIgnore
+	@ManyToMany(cascade = { CascadeType.ALL })
+	private List<Cart> carts = new ArrayList();
+
+	public Product(String name, String category, String description, Double price) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.category = category;
 		this.description = description;
 		this.price = price;
-		this.cart = cart;
+
 	}
 
 	public Product() {
@@ -79,18 +85,20 @@ public class Product {
 		this.price = price;
 	}
 
-	public Cart getAccount() {
-		return cart;
+	public List<Cart> getCarts() {
+		return carts;
 	}
 
-	public void setAccount(Cart cart) {
-		this.cart = cart;
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
 	}
+
+	
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", description=" + description
-				+ ", price=" + price + ", account=" + cart + "]";
+				+ ", price=" + price + "]";
 	}
 
 }
