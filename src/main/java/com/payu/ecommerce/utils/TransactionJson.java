@@ -39,45 +39,45 @@ public class TransactionJson {
 	public String generateJson() {
 
 		return "{"+
-		    "\"language\": \"es\", " +
-		    "\"command\": \"SUBMIT_TRANSACTION\","+
+		    "\"language\": \"es\",\n" +
+		    "\"command\": \"SUBMIT_TRANSACTION\",\n"+
 		    "\"merchant\": {" +
-		      "\"apiLogin\": \"012345678901\","+
-		      "\"apiKey\": \"012345678901\""+ 
-		    "},"+
-			"\"transaction\": {"+
-		      "\"order\": {"+
-		         "\"accountId\":"+'"' +accountId+ '"' +","+ 
-		         "\"referenceCode\":"+'"'+referenceCode+'"' +","+ 
-		         "\"description\": \"payment test\","+ 
-		         "\"language\": \"es\","+ 
-		         "\"additionalValues\": {"+
-		            "\"TX_VALUE\": {"+
-		               "\"value\": 20000,"+ 
-		               "\"currency\": \"COP\""+
-		         "}"+
-		       "}"+
-		      "},"+
-		      "\"payer\": {" +
-		         "\"merchantPayerId\":"+'"'+PAYER_merchantPayerId+'"'+","+ 
-		         "\"fullName\":"+'"'+PAYER_fullName+'"'+","+
-		         "\"emailAddress\":"+'"'+emailAddress+'"'+","+
-		         "\"contactPhone\": \"7563126\","+
-		         "\"dniNumber\": \"5415668464654\""+ 
-		      "},"+
-		      "\"creditCard\": {"+
-		         "\"number\": \"4097440000000004\","+ 
-		         "\"securityCode\": \"321\","+
-		         "\"expirationDate\": \"2024/12\","+
-		         "\"name\":"+'"'+CREDITCARD_name+'"'+
-		      "},"+
-		      "\"extraParameters\": {"+
-		         "\"INSTALLMENTS_NUMBER\": 1"+
-		      "},"+
-		      "\"type\":\"AUTHORIZATION_AND_CAPTURE\"," + 
-		      "\"paymentMethod\": \"VISA\""+
-		   "},"+
-		   "\"test\": false"+ 
+		      "\"apiLogin\": \"012345678901\",\n"+
+		      "\"apiKey\": \"012345678901\"\n"+ 
+		    "},\n"+
+			"\"transaction\": {\n"+
+		      "\"order\": {\n"+
+		         "\"accountId\":"+'"' +accountId+ '"' +",\n"+ 
+		         "\"referenceCode\":"+'"'+referenceCode+'"' +",\n"+ 
+		         "\"description\": \"payment test\",\n"+ 
+		         "\"language\": \"es\",\n"+ 
+		         "\"additionalValues\": {\n"+
+		            "\"TX_VALUE\": {\n"+
+		               "\"value\": 20000,\n"+ 
+		               "\"currency\": \"COP\"\n"+
+		         "}\n"+
+		       "}\n"+
+		      "},\n"+
+		      "\"payer\": {\n" +
+		         "\"merchantPayerId\":"+'"'+PAYER_merchantPayerId+'"'+",\n"+ 
+		         "\"fullName\":"+'"'+PAYER_fullName+'"'+",\n"+
+		         "\"emailAddress\":"+'"'+emailAddress+'"'+",\n"+
+		         "\"contactPhone\": \"7563126\",\n"+
+		         "\"dniNumber\": \"5415668464654\"\n"+ 
+		      "},\n"+
+		      "\"creditCard\": {\n"+
+		         "\"number\": \"4097440000000004\",\n"+ 
+		         "\"securityCode\": \"321\",\n"+
+		         "\"expirationDate\": \"2024/12\",\n"+
+		         "\"name\":"+'"'+CREDITCARD_name+'"'+"\n"+
+		      "},\n"+
+		      "\"extraParameters\": {\n"+
+		         "\"INSTALLMENTS_NUMBER\": 1\n"+
+		      "},\n"+
+		      "\"type\":\"AUTHORIZATION_AND_CAPTURE\",\n" + 
+		      "\"paymentMethod\": \"VISA\"\n"+
+		   "},\n"+
+		   "\"test\": false\n"+ 
 		"}";
 	}
 	

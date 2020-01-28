@@ -55,6 +55,8 @@ public class TransactionService {
 		TransactionJson json = new TransactionJson(choice.getAccountId(), choice.getReferenceCode(), choice.getMerchantPayerId(), 
 				choice.getPayerFullName(), choice.getPayerEmail(), choice.getNameCard());
 		String jsonInputString = json.generateJson();
+		System.out.println("ESTE ES El JSON");
+		System.out.println(jsonInputString);
 		
 		try {
 			URL url = new URL ("https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi");
