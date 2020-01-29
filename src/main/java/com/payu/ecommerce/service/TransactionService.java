@@ -1,10 +1,25 @@
 package com.payu.ecommerce.service;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.payu.ecommerce.model.Transaction;
 import com.payu.ecommerce.repository.TransactionRepository;
+import com.payu.ecommerce.utils.AdditionalValues;
+import com.payu.ecommerce.utils.CreditCard;
+import com.payu.ecommerce.utils.Merchant;
+import com.payu.ecommerce.utils.Order;
+import com.payu.ecommerce.utils.Payer;
+import com.payu.ecommerce.utils.RequestTransaction;
+import com.payu.ecommerce.utils.TX_VALUE;
 import com.payu.ecommerce.utils.TransactionJson;
 
 import java.io.BufferedReader;
@@ -30,14 +45,7 @@ public class TransactionService {
 		}
 		return builder.toString();
 	}
-	public void createTransacction(Transaction transaction) {
-		
-		transaction.setReferenceCode(randomAlphaNumeric(10));
-		transaction.setMerchantPayerId(randomAlphaNumeric(10));
 	
-		transaction.setAccountId(randomAlphaNumeric(10));
-		transactionRepository.save(transaction);
-	}
 	public List<Transaction> allTransactions(){
 		List<Transaction> transactions = new ArrayList();
 		for(Transaction t : transactionRepository.findAll()) {
@@ -46,46 +54,45 @@ public class TransactionService {
 		return transactions;
 	}
 	
-	public String generarRespuestaTransaccion() throws IOException {
-		List<Transaction> transactions = new ArrayList();
-		for(Transaction t : transactionRepository.findAll()) {
-			transactions.add(t);
-		}
-		Transaction choice = transactions.get(transactions.size()-1);
-		TransactionJson json = new TransactionJson(choice.getAccountId(), choice.getReferenceCode(), choice.getMerchantPayerId(), 
-				choice.getPayerFullName(), choice.getPayerEmail(), choice.getNameCard());
-		String jsonInputString = json.generateJson();
-		System.out.println("ESTE ES El JSON");
-		System.out.println(jsonInputString);
+	
+	
+	public String generarResponse(String name, String email, Double valor) {
+		TX_VALUE tXVALUE = new TX_VALUE(2000, "COP");
+		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
+		Order order = new Order(randomAlphaNumeric(10), "TestPayu", "payment test", "es", additionalValues);
+		Payer payer = new Payer(randomAlphaNumeric(10), name, email, "3877942", "5415668464654");
+		CreditCard creditCard = new CreditCard("4097440000000004", "321", "2024/12", name);
+		Merchant merchant = new  Merchant("012345678901", "012345678901");
+		com.payu.ecommerce.utils.Transaction transaction = new com.payu.ecommerce.utils.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
+		RequestTransaction requestTransaction = new  RequestTransaction("es", "SUBMIT_TRANSACTION", merchant, transaction, false);
+		final String uri = "https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi";
+	     
+		Gson gson = new Gson();
+	    RestTemplate restTemplate = new RestTemplate();
+	    String JSON = gson.toJson(requestTransaction);
+	    System.out.println("IMPRIMA JSON");
+	    System.out.println(JSON);
+	    
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);  
+	    headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+	 
+	    HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
+	     
+	    ResponseEntity<String> e = restTemplate.postForEntity(uri, entity, String.class);
+	     
+	    //System.out.println(e);
+	    JSONObject jsonObject = new JSONObject(e.getBody());
+	    System.out.println("DEBERIA IMPRIMIR");
+	    System.out.println(jsonObject.getJSONObject("transactionResponse").get("state"));
+	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
+	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
+	    Double transaction_value = 5000+0.0; 
+	    //System.out.println(jsonObject.getJSONObject("transactionResponse").getString("responseCode"));
+	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
+	    return e.getBody().toString();
 		
-		try {
-			URL url = new URL ("https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi");
-			HttpURLConnection con = (HttpURLConnection)url.openConnection();
-			con.setRequestMethod("POST");
-			con.setRequestProperty("Content-Type", "application/json; utf-8");
-			con.setRequestProperty("Accept", "application/json");
-			con.setDoOutput(true);
-			try(OutputStream os = con.getOutputStream()) {
-			    byte[] input = jsonInputString.getBytes("utf-8");
-			    os.write(input, 0, input.length);           
-			}
-			try(BufferedReader br = new BufferedReader(
-					  new InputStreamReader(con.getInputStream(), "utf-8"))) {
-					    StringBuilder response = new StringBuilder();
-					    String responseLine = null;
-					    while ((responseLine = br.readLine()) != null) {
-					        response.append(responseLine.trim());
-					    }
-					    System.out.println(response.toString());
-					    return response.toString();
-					}
-			
-
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "NOFUNCIONO";
 		
 		
 	}

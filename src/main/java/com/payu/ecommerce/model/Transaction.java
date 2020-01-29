@@ -8,57 +8,42 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-	
+
 	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	private String whoTransaction;
+
+	private String state;
+
+	private String numeroOrden;
+
+	private Double valueTransaction;
 	
-	@GeneratedValue
-	private String accountId;
-	//El reference Code lo creamos apartir de la concatenacion de nombre|valor|numero_random
-	private String referenceCode;
-	
-	@GeneratedValue
-	private String merchantPayerId;
-	
-	//Lo generamos apartir del Fullname; guardado en la base de datos;
-	private String payerFullName;
-	
-	//Lo generamos apartir de email guardado en la bse de datos
-	private String payerEmail;
-	
-	//Lo generamos apartir del fullname guardado en la base de datos;
-	private String nameCard;
+
+	public Transaction(Long id, String whoTransaction, String state, String numeroOrden, Double valueTransaction) {
+		super();
+		this.id = id;
+		this.whoTransaction = whoTransaction;
+		this.state = state;
+		this.numeroOrden = numeroOrden;
+		this.valueTransaction = valueTransaction;
+	}
+	public Transaction(String whoTransaction, String state, String numeroOrden, Double valueTransaction) {
+		super();
+		
+		this.whoTransaction = whoTransaction;
+		this.state = state;
+		this.numeroOrden = numeroOrden;
+		this.valueTransaction = valueTransaction;
+	}
+
 
 	public Transaction() {
 		// TODO Auto-generated constructor stub
 	}
-	public static String randomAlphaNumeric(int count) {
-		StringBuilder builder = new StringBuilder();
-		while (count-- != 0) {
-			int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
-			builder.append(ALPHA_NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
-	
-	public Transaction(Long id, String accountId, String referenceCode, String merchantPayerId, String payerFullName,
-			String payerEmail, String nameCard) {
-		super();
-		this.id = id;
-		this.accountId = randomAlphaNumeric(10);
-		this.referenceCode = randomAlphaNumeric(10);
-		this.merchantPayerId = randomAlphaNumeric(10);
-		this.payerFullName = payerFullName;
-		this.payerEmail = payerEmail;
-		this.nameCard = nameCard;
-	}
-	
-
-	
-
-
 
 	public Long getId() {
 		return id;
@@ -68,64 +53,46 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public String getAccountId() {
-		return accountId;
+	public String getWhoTransaction() {
+		return whoTransaction;
 	}
 
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
+	public void setWhoTransaction(String whoTransaction) {
+		this.whoTransaction = whoTransaction;
 	}
 
-	public String getReferenceCode() {
-		return referenceCode;
+	public String getState() {
+		return state;
 	}
 
-	public void setReferenceCode(String referenceCode) {
-		this.referenceCode = referenceCode;
+	public void setState(String state) {
+		this.state = state;
 	}
 
-	public String getMerchantPayerId() {
-		return merchantPayerId;
+	public String getNumeroOrden() {
+		return numeroOrden;
 	}
 
-	public void setMerchantPayerId(String merchantPayerId) {
-		this.merchantPayerId = merchantPayerId;
+	public void setNumeroOrden(String numeroOrden) {
+		this.numeroOrden = numeroOrden;
 	}
 
-	public String getPayerFullName() {
-		return payerFullName;
+	public Double getValueTransaction() {
+		return valueTransaction;
 	}
 
-	public void setPayerFullName(String payerFullName) {
-		this.payerFullName = payerFullName;
+	public void setValueTransaction(Double valueTransaction) {
+		this.valueTransaction = valueTransaction;
 	}
 
-	public String getPayerEmail() {
-		return payerEmail;
-	}
-
-	public void setPayerEmail(String payerEmail) {
-		this.payerEmail = payerEmail;
-	}
-
-	public String getNameCard() {
-		return nameCard;
-	}
-
-	public void setNameCard(String nameCard) {
-		this.nameCard = nameCard;
+	public static String getAlphaNumericString() {
+		return ALPHA_NUMERIC_STRING;
 	}
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", accountId=" + accountId + ", referenceCode=" + referenceCode
-				+ ", merchantPayerId=" + merchantPayerId + ", payerFullName=" + payerFullName + ", payerEmail="
-				+ payerEmail + ", nameCard=" + nameCard + "]";
+		return "Transaction [id=" + id + ", whoTransaction=" + whoTransaction + ", state=" + state + ", numeroOrden="
+				+ numeroOrden + ", valueTransaction=" + valueTransaction + "]";
 	}
-	
-	
-	
-	
-	
 
 }
