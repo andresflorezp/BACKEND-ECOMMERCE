@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.payu.ecommerce.model.Transaction;
-import com.payu.ecommerce.pojos.AdditionalValues;
-import com.payu.ecommerce.pojos.CreditCard;
-import com.payu.ecommerce.pojos.Merchant;
-import com.payu.ecommerce.pojos.Order;
-import com.payu.ecommerce.pojos.Payer;
-import com.payu.ecommerce.pojos.RequestTransaction;
-import com.payu.ecommerce.pojos.TxValue;
+import com.payu.ecommerce.pojo.AdditionalValues;
+import com.payu.ecommerce.pojo.CreditCard;
+import com.payu.ecommerce.pojo.Merchant;
+import com.payu.ecommerce.pojo.Order;
+import com.payu.ecommerce.pojo.Payer;
+import com.payu.ecommerce.pojo.RequestTransaction;
+import com.payu.ecommerce.pojo.TxValue;
 import com.payu.ecommerce.repository.TransactionRepository;
 
 import java.util.*;
@@ -38,9 +38,7 @@ import java.util.*;
 @Service
 public class TransactionService {
 	private static final String ALPHA_NUMERIC_STRING = "123456789";
-	/**
-	 * 
-	 */
+
 	@Autowired
 	TransactionRepository transactionRepository;
 	
@@ -79,7 +77,7 @@ public class TransactionService {
 		Payer payer = new Payer("1", name, "payer_test@test.com", "3877942", "5415668464654");
 		CreditCard creditCard = new CreditCard("4097440000000004", "321", "2024/12", name);
 		Merchant merchant = new  Merchant("012345678901", "012345678901");
-		com.payu.ecommerce.pojos.Transaction transaction = new com.payu.ecommerce.pojos.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
+		com.payu.ecommerce.pojo.Transaction transaction = new com.payu.ecommerce.pojo.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
 		RequestTransaction requestTransaction = new  RequestTransaction("es", "SUBMIT_TRANSACTION", merchant, transaction, false);
 		final String uri = "https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi";
 	     

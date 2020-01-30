@@ -25,9 +25,7 @@ import com.payu.ecommerce.repository.ProductRepository;
 
 @Service
 public class ProductService {
-	/**
-	 * 
-	 */
+
 	@Autowired
 	ProductRepository productRepository;
 

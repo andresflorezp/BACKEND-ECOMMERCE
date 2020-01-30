@@ -23,9 +23,7 @@ import java.util.*;
 
 @Service
 public class AccountService {
-	/**
-	 * 
-	 */
+
 	@Autowired
 	AccountRepository accountRepository;
 

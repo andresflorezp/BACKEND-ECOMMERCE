@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.pojos;
+package com.payu.ecommerce.pojo;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -15,33 +15,18 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since 0.0.1
  */
 
-
 public class Order {
 
-	/**
-	 * 
-	 */
 	private String accountId;
-	/**
-	 * 
-	 */
+
 	private String referenceCode;
-	/**
-	 * 
-	 */
+
 	private String description;
-	/**
-	 * 
-	 */
+
 	private String language;
-	/**
-	 * 
-	 */
+
 	private AdditionalValues additionalValues;
 
-	/**
-	 * 
-	 */
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}

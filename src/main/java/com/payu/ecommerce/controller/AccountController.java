@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.controllers;
+package com.payu.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +29,7 @@ import com.payu.ecommerce.service.AccountService;
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
-	
-	/**
-	 * 
-	 */
+
 	@Autowired
 	AccountService accountService;
 

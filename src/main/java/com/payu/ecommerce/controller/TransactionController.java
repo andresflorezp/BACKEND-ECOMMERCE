@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.controllers;
+package com.payu.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +23,12 @@ import com.payu.ecommerce.service.TransactionService;
  * @since 0.0.1
  */
 
-
 @RestController
 @RequestMapping("/api/transaction")
 public class TransactionController {
-	/**
-	 * 
-	 */
+
 	@Autowired
 	TransactionService transactionService;
-
-	
 
 	/**
 	 * @return
@@ -46,7 +41,6 @@ public class TransactionController {
 		return new ResponseEntity<>(transactionService.allTransactions(), HttpStatus.ACCEPTED);
 	}
 
-
 	/**
 	 * @param name
 	 * @param email
@@ -55,9 +49,10 @@ public class TransactionController {
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value = "/add-product/{name}/{email}/{valor}")
-	public ResponseEntity<?> addProduct(@PathVariable("name") String name,@PathVariable("email") String email,@PathVariable("valor") Double value) {
+	public ResponseEntity<?> addProduct(@PathVariable("name") String name, @PathVariable("email") String email,
+			@PathVariable("valor") Double value) {
 		try {
-			return new ResponseEntity<>(transactionService.generarResponse(name, email, value),HttpStatus.CREATED);
+			return new ResponseEntity<>(transactionService.generarResponse(name, email, value), HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);

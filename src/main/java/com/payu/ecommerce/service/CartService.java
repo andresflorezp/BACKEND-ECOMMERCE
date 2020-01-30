@@ -25,9 +25,7 @@ import com.payu.ecommerce.repository.CartRepository;
 
 @Service
 public class CartService {
-	/**
-	 * 
-	 */
+	
 	@Autowired
 	AccountService accountService;
 

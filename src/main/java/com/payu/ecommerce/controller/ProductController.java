@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.controllers;
+package com.payu.ecommerce.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,9 +35,7 @@ import com.payu.ecommerce.service.ProductService;
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
-	/**
-	 * 
-	 */
+
 	@Autowired
 	ProductService productService;
 
@@ -68,12 +66,13 @@ public class ProductController {
 			List<Product> newProduct = new ArrayList<Product>();
 			for (Product p : productService.allProducts()) {
 				boolean entro = false;
-				for(int i=0;i<newProduct.size();i++) {
-					if(newProduct.get(i).getName().equals(p.getName())) {
-						entro=true;
+				for (int i = 0; i < newProduct.size(); i++) {
+					if (newProduct.get(i).getName().equals(p.getName())) {
+						entro = true;
 					}
 				}
-				if(!entro)newProduct.add(p);
+				if (!entro)
+					newProduct.add(p);
 			}
 
 			return new ResponseEntity<>(newProduct, HttpStatus.ACCEPTED);

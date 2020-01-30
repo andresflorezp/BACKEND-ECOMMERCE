@@ -27,53 +27,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "account")
-public class Account implements Serializable{
+public class Account implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	/**
-	 * 
-	 */
+
 	private String email;
-	/**
-	 * 
-	 */
+
 	private String password;
-	/**
-	 * 
-	 */
+
 	private String fullName;
-	/**
-	 * 
-	 */
+
 	private Boolean enabled;
-	/**
-	 * 
-	 */
+
 	private String role;
-	/**
-	 * 
-	 */
+
 	private Double balance;
-	
-	/**
-	 * 
-	 */
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Cart cart;
 
-	/**
-	 * 
-	 */
 	public Account() {
 		// TODO Auto-generated constructor stub
 	}
@@ -221,8 +198,5 @@ public class Account implements Serializable{
 		return "Account [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
 				+ ", enabled=" + enabled + ", role=" + role + ", balance=" + balance + ", cart=" + cart + "]";
 	}
-	
-	
-	
 
 }

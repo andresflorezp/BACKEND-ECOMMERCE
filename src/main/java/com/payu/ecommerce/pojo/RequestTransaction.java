@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.pojos;
+package com.payu.ecommerce.pojo;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -18,25 +18,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class RequestTransaction {
 
-	/**
-	 * 
-	 */
 	private String language;
-	/**
-	 * 
-	 */
+
 	private String command;
-	/**
-	 * 
-	 */
+
 	private Merchant merchant;
-	/**
-	 * 
-	 */
+
 	private Transaction transaction;
-	/**
-	 * 
-	 */
+
 	private Boolean test;
 
 	/**

@@ -21,31 +21,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-	/**
-	 * 
-	 */
+
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	/**
-	 * 
-	 */
 	private String whoTransaction;
 
-	/**
-	 * 
-	 */
 	private String state;
 
-	/**
-	 * 
-	 */
 	private String orderNumber;
 
-	/**
-	 * 
-	 */
 	private Double valueTransaction;
 
 	/**

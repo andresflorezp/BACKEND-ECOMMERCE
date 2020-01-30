@@ -28,37 +28,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
+
 	@Id
 	@GeneratedValue
 	@Column(name = "IdProduct")
 	private Long id;
-	/**
-	 * 
-	 */
+
 	private String name;
-	/**
-	 * 
-	 */
+
 	private String category;
-	/**
-	 * 
-	 */
+
 	private String description;
-	/**
-	 * 
-	 */
+
 	private Double price;
 
-	/**
-	 * 
-	 */
+
 	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.ALL })
 	private List<Cart> carts = new ArrayList<Cart>();

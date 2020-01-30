@@ -3,8 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.controllers;
-
+package com.payu.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,9 +29,7 @@ import com.payu.ecommerce.service.CartService;
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
-	/**
-	 * 
-	 */
+
 	@Autowired
 	CartService cartService;
 
@@ -77,14 +74,14 @@ public class CartController {
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
 		}
 	}
-	
+
 	/**
 	 * @param email
 	 * @return
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.DELETE, value = "/empty-cart/{email}")
-	public ResponseEntity<?> EmptyCart(@PathVariable("email")String email) {
+	public ResponseEntity<?> EmptyCart(@PathVariable("email") String email) {
 		try {
 			cartService.emptyCart(email);
 			return new ResponseEntity<>(HttpStatus.CREATED);

@@ -32,38 +32,24 @@ import java.util.*;
 @Entity
 @Table(name = "cart")
 public class Cart implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	/**
-	 * 
-	 */
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id")
 	private Account account;
 
-	/**
-	 * 
-	 */
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CartProducto", joinColumns = { @JoinColumn(name = "IdCart") }, inverseJoinColumns = {
 			@JoinColumn(name = "IdProduct") })
 	private List<Product> allProducts = new ArrayList<>();
 
-	/**
-	 * 
-	 */
 	public Cart() {
 		// TODO Auto-generated constructor stub
 	}

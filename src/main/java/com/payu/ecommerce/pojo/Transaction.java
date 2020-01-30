@@ -3,7 +3,7 @@
  * http://www.payu.com.co
  * Date: 30/01/2020
  */
-package com.payu.ecommerce.pojos;
+package com.payu.ecommerce.pojo;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -18,30 +18,16 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Transaction {
 
-	/**
-	 * 
-	 */
 	private Order order;
-	/**
-	 * 
-	 */
+
 	private Payer payer;
-	/**
-	 * 
-	 */
+
 	private CreditCard creditCard;
-	/**
-	 * 
-	 */
+	
 	private String type;
-	/**
-	 * 
-	 */
+
 	private String paymentMethod;
 
-	/**
-	 * 
-	 */
 	public Transaction() {
 		// TODO Auto-generated constructor stub
 	}
