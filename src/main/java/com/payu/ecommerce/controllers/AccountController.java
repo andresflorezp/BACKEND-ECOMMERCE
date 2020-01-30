@@ -1,3 +1,8 @@
+/**
+ * PayU Latam - Copyright (c) 2013 - 2018
+ * http://www.payu.com.co
+ * Date: 30/01/2020
+ */
 package com.payu.ecommerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,34 +18,55 @@ import org.springframework.web.bind.annotation.RestController;
 import com.payu.ecommerce.model.Account;
 import com.payu.ecommerce.service.AccountService;
 
+/**
+ * The Class AccountController.
+ *
+ * @author <a href="andres.florez@payulatam.com">Andres Florez</a>
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
+	
+	/**
+	 * 
+	 */
 	@Autowired
 	AccountService accountService;
 
+	/**
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/all-account")
 	public ResponseEntity<?> getAllAccounts() {
-		//System.out.println(accountService.getAllAccount());
 		if (accountService.getAllAccount().size() == 0)
 			return new ResponseEntity<>("HTTP 404", HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.ACCEPTED);
 	}
 
+	/**
+	 * @param account
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value = "/add-account")
 	public ResponseEntity<?> addAccount(@RequestBody Account account) {
-
 		try {
 			accountService.createAccount(account);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
 		}
-
 	}
 
+	/**
+	 * @param user
+	 * @param password
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/isLogin/{user}/{password}")
 	public ResponseEntity<?> login(@PathVariable("user") String user, @PathVariable("password") String password) {

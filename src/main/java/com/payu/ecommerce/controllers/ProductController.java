@@ -1,3 +1,8 @@
+/**
+ * PayU Latam - Copyright (c) 2013 - 2018
+ * http://www.payu.com.co
+ * Date: 30/01/2020
+ */
 package com.payu.ecommerce.controllers;
 
 import java.util.ArrayList;
@@ -19,48 +24,66 @@ import com.payu.ecommerce.model.Account;
 import com.payu.ecommerce.model.Product;
 import com.payu.ecommerce.service.ProductService;
 
+/**
+ * The Class ProductController.
+ *
+ * @author <a href="andres.florez@payulatam.com">Andres Florez</a>
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
+	/**
+	 * 
+	 */
 	@Autowired
 	ProductService productService;
 
+	/**
+	 * @param product
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value = "/create-product")
 	public ResponseEntity<?> addAccount(@RequestBody Product product) {
-
 		try {
 			productService.createProduct(product);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
 		}
-
 	}
 
+	/**
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/all-product")
-	public ResponseEntity<?> getAllAccounts() {
-		System.out.println(productService.allProducts());
+	public ResponseEntity<?> getAllProducts() {
 		if (productService.allProducts().size() == 0)
 			return new ResponseEntity<>("HTTP 404", HttpStatus.NOT_FOUND);
 		else {
-			List<Product> nP = new ArrayList();
+			List<Product> newProduct = new ArrayList<Product>();
 			for (Product p : productService.allProducts()) {
-				//nP.add(p);
 				boolean entro = false;
-				for(int i=0;i<nP.size();i++) {
-					if(nP.get(i).getName().equals(p.getName())) {
+				for(int i=0;i<newProduct.size();i++) {
+					if(newProduct.get(i).getName().equals(p.getName())) {
 						entro=true;
 					}
 				}
-				if(!entro)nP.add(p);
+				if(!entro)newProduct.add(p);
 			}
 
-			return new ResponseEntity<>(nP, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(newProduct, HttpStatus.ACCEPTED);
 		}
 	}
 
+	/**
+	 * @param name
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/productName/{name}")
 	public ResponseEntity<?> getProduct(@PathVariable("name") String name) {
