@@ -33,7 +33,7 @@ import java.util.*;
 
 @Service
 public class TransactionService {
-	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private static final String ALPHA_NUMERIC_STRING = "123456789";
 	@Autowired
 	TransactionRepository transactionRepository;
 	
@@ -56,11 +56,11 @@ public class TransactionService {
 	
 	
 	
-	public String generarResponse(String name, String email, Double valor) {
+	public void generarResponse(String name, String email, Double valor) {
 		TX_VALUE tXVALUE = new TX_VALUE(2000, "COP");
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
-		Order order = new Order(randomAlphaNumeric(10), "TestPayu", "payment test", "es", additionalValues);
-		Payer payer = new Payer(randomAlphaNumeric(10), name, email, "3877942", "5415668464654");
+		Order order = new Order("1", "TestPayu", "payment test", "es", additionalValues);
+		Payer payer = new Payer("1", name, "payer_test@test.com", "3877942", "5415668464654");
 		CreditCard creditCard = new CreditCard("4097440000000004", "321", "2024/12", name);
 		Merchant merchant = new  Merchant("012345678901", "012345678901");
 		com.payu.ecommerce.utils.Transaction transaction = new com.payu.ecommerce.utils.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
@@ -70,9 +70,7 @@ public class TransactionService {
 		Gson gson = new Gson();
 	    RestTemplate restTemplate = new RestTemplate();
 	    String JSON = gson.toJson(requestTransaction);
-	    System.out.println("IMPRIMA JSON");
 	    System.out.println(JSON);
-	    
 	    
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);  
@@ -84,14 +82,15 @@ public class TransactionService {
 	     
 	    //System.out.println(e);
 	    JSONObject jsonObject = new JSONObject(e.getBody());
+	    System.out.println(jsonObject.toString());
 	    System.out.println("DEBERIA IMPRIMIR");
 	    System.out.println(jsonObject.getJSONObject("transactionResponse").get("state"));
+	    System.out.println("Paso por la parte del estado");
 	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
 	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
 	    Double transaction_value = 5000+0.0; 
 	    //System.out.println(jsonObject.getJSONObject("transactionResponse").getString("responseCode"));
 	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
-	    return e.getBody().toString();
 		
 		
 		

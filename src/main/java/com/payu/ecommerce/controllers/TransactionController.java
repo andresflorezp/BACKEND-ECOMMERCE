@@ -36,12 +36,13 @@ public class TransactionController {
 
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value = "/add-product/{name}/{email}/{valor}")
-	public ResponseEntity<?> addProduct(@PathVariable("name") String name,@PathVariable("email") String email, Double valor) {
+	public ResponseEntity<?> addProduct(@PathVariable("name") String name,@PathVariable("email") String email,@PathVariable("valor") Double valor) {
 
 		try {
 			transactionService.generarResponse(name, email, valor);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
 		}
 
