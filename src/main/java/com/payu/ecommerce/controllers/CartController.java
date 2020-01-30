@@ -58,6 +58,19 @@ public class CartController {
 		}
 
 	}
+	
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.DELETE, value = "/empty-cart/{email}")
+	public ResponseEntity<?> EmptyCart(@PathVariable("email")String email) {
+
+		try {
+			cartService.emptyCart(email);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
+		}
+
+	}
 
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/obtain-cart/{email}")

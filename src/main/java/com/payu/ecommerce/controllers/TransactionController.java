@@ -39,8 +39,8 @@ public class TransactionController {
 	public ResponseEntity<?> addProduct(@PathVariable("name") String name,@PathVariable("email") String email,@PathVariable("valor") Double valor) {
 
 		try {
-			transactionService.generarResponse(name, email, valor);
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			
+			return new ResponseEntity<>(transactionService.generarResponse(name, email, valor),HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);

@@ -56,7 +56,7 @@ public class TransactionService {
 	
 	
 	
-	public void generarResponse(String name, String email, Double valor) {
+	public String generarResponse(String name, String email, Double valor) {
 		TX_VALUE tXVALUE = new TX_VALUE(2000, "COP");
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
 		Order order = new Order("1", "TestPayu", "payment test", "es", additionalValues);
@@ -88,9 +88,9 @@ public class TransactionService {
 	    System.out.println("Paso por la parte del estado");
 	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
 	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
-	    Double transaction_value = 5000+0.0; 
 	    //System.out.println(jsonObject.getJSONObject("transactionResponse").getString("responseCode"));
 	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
+	    return state;
 		
 		
 		

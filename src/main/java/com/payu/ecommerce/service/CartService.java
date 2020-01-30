@@ -54,6 +54,18 @@ public class CartService {
 		}
 
 	}
+	
+	public void emptyCart(String email) {
+		for (Account a : accountService.getAllAccount()) {
+			if (a.getEmail().equals(email)) {
+				
+				a.getCart().setAllproducts(new ArrayList<>());
+				accountService.createAccount(a);
+				break;
+			}
+
+		}
+	}
 
 	public List<Product> obtainCart(String email) {
 		List<Account> accounts = accountService.getAllAccount();
