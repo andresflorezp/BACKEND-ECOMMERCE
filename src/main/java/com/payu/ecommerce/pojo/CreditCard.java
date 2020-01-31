@@ -17,14 +17,29 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class CreditCard {
 
+	/**
+	 * The number
+	 */
 	private String number;
 
+	/**
+	 * The security code
+	 */
 	private String securityCode;
 
+	/**
+	 * The expiration Date
+	 */
 	private String expirationDate;
 
+	/**
+	 * The name
+	 */
 	private String name;
 
+	/**
+	 * The empty constructor
+	 */
 	public CreditCard() {
 		// TODO Auto-generated constructor stub
 	}

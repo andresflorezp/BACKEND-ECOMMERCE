@@ -38,6 +38,7 @@ public class CartService {
 
 
 	/**
+	 * Create a cart
 	 * @param cart
 	 */
 	public void createCart(Cart cart) {
@@ -47,6 +48,7 @@ public class CartService {
 	}
 
 	/**
+	 * Obtain all carts
 	 * @return
 	 */
 	public List<Cart> getAllCarts() {
@@ -58,6 +60,7 @@ public class CartService {
 	}
 
 	/**
+	 * Add product to cart
 	 * @param email
 	 * @param product
 	 */
@@ -78,6 +81,7 @@ public class CartService {
 	}
 	
 	/**
+	 * Empty Cart
 	 * @param email
 	 */
 	public void emptyCart(String email) {
@@ -92,6 +96,7 @@ public class CartService {
 	}
 
 	/**
+	 * List all products of a cart
 	 * @param email
 	 * @return
 	 */

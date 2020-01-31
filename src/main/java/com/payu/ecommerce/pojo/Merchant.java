@@ -18,10 +18,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Merchant {
 
+	/**
+	 * The api login
+	 */
 	private String apiLogin;
 
+	/**
+	 * The api key
+	 */
 	private String apiKey;
 
+	/**
+	 * The empty constructor
+	 */
 	public Merchant() {
 		// TODO Auto-generated constructor stub
 	}

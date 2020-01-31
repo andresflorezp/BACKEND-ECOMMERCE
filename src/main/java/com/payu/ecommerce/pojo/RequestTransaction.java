@@ -18,14 +18,29 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class RequestTransaction {
 
+	/**
+	 * The language
+	 */
 	private String language;
 
+	/**
+	 * The command
+	 */
 	private String command;
 
+	/**
+	 * The merchant
+	 */
 	private Merchant merchant;
 
+	/**
+	 * The transaction
+	 */
 	private Transaction transaction;
 
+	/**
+	 * The test
+	 */
 	private Boolean test;
 
 	/**

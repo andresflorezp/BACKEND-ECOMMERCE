@@ -28,6 +28,7 @@ public class AccountService {
 	AccountRepository accountRepository;
 
 	/**
+	 * create a account
 	 * @param account
 	 */
 	public void createAccount(Account account) {
@@ -35,13 +36,14 @@ public class AccountService {
 	}
 	
 	/**
-	 * 
+	 * Delete all accounts
 	 */
 	public void deleteAll() {
 		accountRepository.deleteAll();
 	}
 
 	/**
+	 * Obtain Account by Email and password
 	 * @param email
 	 * @param password
 	 * @return
@@ -59,6 +61,7 @@ public class AccountService {
 	}
 
 	/**
+	 * Obtain all accounts
 	 * @return
 	 */
 	public List<Account> getAllAccount() {

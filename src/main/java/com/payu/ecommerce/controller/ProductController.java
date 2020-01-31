@@ -40,6 +40,7 @@ public class ProductController {
 	ProductService productService;
 
 	/**
+	 * This controller allow create product
 	 * @param product
 	 * @return
 	 */
@@ -55,6 +56,7 @@ public class ProductController {
 	}
 
 	/**
+	 * This controller allow obtain all product
 	 * @return
 	 */
 	@CrossOrigin
@@ -80,6 +82,7 @@ public class ProductController {
 	}
 
 	/**
+	 * This controller allow obtain a product specific by name
 	 * @param name
 	 * @return
 	 */

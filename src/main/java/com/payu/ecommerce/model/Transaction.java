@@ -22,16 +22,31 @@ import javax.persistence.Table;
 @Table(name = "transaction")
 public class Transaction {
 
+	/**
+	 * The id
+	 */
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * The who transaction
+	 */
 	private String whoTransaction;
 
+	/**
+	 * The state
+	 */
 	private String state;
 
+	/**
+	 * The order number
+	 */
 	private String orderNumber;
 
+	/**
+	 * The value Transaction
+	 */
 	private Double valueTransaction;
 
 	/**
@@ -143,7 +158,7 @@ public class Transaction {
 	}
 
 	/**
-	 *
+	 * The representational string of the class Transaction
 	 */
 	@Override
 	public String toString() {

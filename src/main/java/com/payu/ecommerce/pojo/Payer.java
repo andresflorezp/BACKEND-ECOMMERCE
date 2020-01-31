@@ -18,14 +18,29 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Payer {
 
+	/**
+	 * The merchant payer id
+	 */
 	private String merchantPayerId;
 
+	/**
+	 * The fullname
+	 */
 	private String fullName;
 
+	/**
+	 * The email Address
+	 */
 	private String emailAddress;
 
+	/**
+	 * The contact phone
+	 */
 	private String contactPhone;
 
+	/**
+	 * The dni number
+	 */
 	private String dniNumber;
 
 	/**
@@ -45,7 +60,7 @@ public class Payer {
 	}
 
 	/**
-	 * 
+	 * The empty constructor
 	 */
 	public Payer() {
 		// TODO Auto-generated constructor stub

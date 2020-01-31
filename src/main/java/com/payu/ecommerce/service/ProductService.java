@@ -30,6 +30,7 @@ public class ProductService {
 	ProductRepository productRepository;
 
 	/**
+	 * Create a product
 	 * @param product
 	 */
 	public void createProduct(Product product) {
@@ -37,6 +38,7 @@ public class ProductService {
 	}
 
 	/**
+	 * The all products
 	 * @return
 	 */
 	public List<Product> allProducts() {
@@ -48,6 +50,7 @@ public class ProductService {
 	}
 
 	/**
+	 * The obtain a product
 	 * @param name
 	 * @return
 	 */

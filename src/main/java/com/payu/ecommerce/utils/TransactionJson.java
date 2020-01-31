@@ -50,6 +50,14 @@ public class TransactionJson {
 	
 	
 	
+	/**
+	 * @param name
+	 * @param email
+	 * @param valor
+	 * @param card
+	 * @param cvv
+	 * @param expirationDate
+	 */
 	public TransactionJson(String name, String email, Double valor, String card, String cvv, String expirationDate) {
 		super();
 		this.name = name;
@@ -62,6 +70,10 @@ public class TransactionJson {
 
 
 
+	/**
+	 * This function allows to create the request with the instance to map the payments api
+	 * @return
+	 */
 	public RequestTransaction request() {
 		
 		TxValue tXVALUE = new TxValue(TX_VALUE_VALUE.intValue(), CURRENCY);

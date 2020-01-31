@@ -44,6 +44,7 @@ public class TransactionService {
 	
 
 	/**
+	 * The all transactions
 	 * @return
 	 */
 	public List<Transaction> allTransactions(){
@@ -57,6 +58,7 @@ public class TransactionService {
 	
 	
 	/**
+	 * This function allows you to connect to the payment api and obtain the indicated values of the transaction
 	 * @param name
 	 * @param email
 	 * @param valor

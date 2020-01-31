@@ -34,6 +34,7 @@ public class CartController {
 	CartService cartService;
 
 	/**
+	 * This Controller allow create a cart by a user
 	 * @param cart
 	 * @return
 	 */
@@ -49,7 +50,7 @@ public class CartController {
 	}
 
 	/**
-	 * @return
+	 * @return all carts
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/all-carts")
@@ -60,6 +61,7 @@ public class CartController {
 	}
 
 	/**
+	 * this controller allow add product in a cart specific
 	 * @param email
 	 * @param product
 	 * @return
@@ -76,6 +78,7 @@ public class CartController {
 	}
 
 	/**
+	 * This controller allow empty cart
 	 * @param email
 	 * @return
 	 */
@@ -91,8 +94,9 @@ public class CartController {
 	}
 
 	/**
+	 * This controller obtain a cart specific
 	 * @param email
-	 * @return
+	 * @return 
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/obtain-cart/{email}")

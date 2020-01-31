@@ -17,8 +17,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class TxValue {
 
+	/**
+	 * The value
+	 */
 	private Integer value;
 
+	/**
+	 * The currency
+	 */
 	private String currency;
 
 	public TxValue() {

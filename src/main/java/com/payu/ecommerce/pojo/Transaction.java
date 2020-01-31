@@ -18,16 +18,34 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Transaction {
 
+	/**
+	 * The order
+	 */
 	private Order order;
 
+	/**
+	 * The payer
+	 */
 	private Payer payer;
 
+	/**
+	 * The creditCard
+	 */
 	private CreditCard creditCard;
 	
+	/**
+	 * The credit card
+	 */
 	private String type;
 
+	/**
+	 * The payment method
+	 */
 	private String paymentMethod;
 
+	/**
+	 * The empty constructor
+	 */
 	public Transaction() {
 		// TODO Auto-generated constructor stub
 	}
@@ -119,7 +137,7 @@ public class Transaction {
 	}
 
 	/**
-	 *
+	 * The representational string Transaction
 	 */
 	@Override
 	public String toString() {

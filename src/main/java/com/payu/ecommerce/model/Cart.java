@@ -34,16 +34,25 @@ import java.util.*;
 public class Cart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * The id
+	 */
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/**
+	 * The account
+	 */
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id")
 	private Account account;
 
+	/**
+	 * The all products
+	 */
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CartProducto", joinColumns = { @JoinColumn(name = "IdCart") }, inverseJoinColumns = {

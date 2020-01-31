@@ -17,16 +17,34 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Order {
 
+	/**
+	 * The accountid
+	 */
 	private String accountId;
 
+	/**
+	 * The reference code
+	 */
 	private String referenceCode;
 
+	/**
+	 * The description
+	 */
 	private String description;
 
+	/**
+	 * The language
+	 */
 	private String language;
 
+	/**
+	 * The additiona values
+	 */
 	private AdditionalValues additionalValues;
 
+	/**
+	 * The empty constructor
+	 */
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}

@@ -17,6 +17,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class AdditionalValues {
 	
+	/**
+	 * The Tx Value
+	 */
 	private TxValue TX_VALUE;
 
 	public AdditionalValues() {

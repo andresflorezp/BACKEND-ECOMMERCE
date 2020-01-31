@@ -34,7 +34,7 @@ public class AccountController {
 	AccountService accountService;
 
 	/**
-	 * @return
+	 * @return all accounts of the Ecommerce
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/all-account")
@@ -45,6 +45,7 @@ public class AccountController {
 	}
 
 	/**
+	 * This controller allow create a account
 	 * @param account
 	 * @return
 	 */
@@ -60,9 +61,10 @@ public class AccountController {
 	}
 
 	/**
+	 * This controller allow obtain user with email and password
 	 * @param user
 	 * @param password
-	 * @return
+	 * @return a User
 	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value = "/isLogin/{user}/{password}")

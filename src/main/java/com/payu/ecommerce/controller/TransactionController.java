@@ -31,6 +31,7 @@ public class TransactionController {
 	TransactionService transactionService;
 
 	/**
+	 * This controller allow obtain all transactions
 	 * @return
 	 */
 	@CrossOrigin
@@ -42,6 +43,7 @@ public class TransactionController {
 	}
 
 	/**
+	 * This controller allow create transaction
 	 * @param name
 	 * @param email
 	 * @param value

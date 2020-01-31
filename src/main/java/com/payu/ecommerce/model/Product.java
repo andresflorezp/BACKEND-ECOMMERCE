@@ -31,17 +31,32 @@ public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * The id
+	 */
 	@Id
 	@GeneratedValue
 	@Column(name = "IdProduct")
 	private Long id;
 
+	/**
+	 * The name
+	 */
 	private String name;
 
+	/**
+	 * The category
+	 */
 	private String category;
 
+	/**
+	 * The description
+	 */
 	private String description;
 
+	/**
+	 * The price
+	 */
 	private Double price;
 
 
@@ -65,7 +80,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * 
+	 * The empty constructor
 	 */
 	public Product() {
 		// TODO Auto-generated constructor stub
