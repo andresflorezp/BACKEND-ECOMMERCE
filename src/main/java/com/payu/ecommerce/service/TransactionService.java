@@ -71,11 +71,12 @@ public class TransactionService {
 	 * @return
 	 */
 	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate) {
+		expirationDate.replaceAll("$", "/");
 		TxValue tXVALUE = new TxValue(2000, "COP");
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
 		Order order = new Order("1", "TestPayu", "payment test", "es", additionalValues);
 		Payer payer = new Payer("1", name, "payer_test@test.com", "3877942", "5415668464654");
-		CreditCard creditCard = new CreditCard(card, cvv, expirationDate, name);
+		CreditCard creditCard = new CreditCard(card, cvv, "2024/12", name);
 		Merchant merchant = new  Merchant("012345678901", "012345678901");
 		com.payu.ecommerce.pojo.Transaction transaction = new com.payu.ecommerce.pojo.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
 		RequestTransaction requestTransaction = new  RequestTransaction("es", "SUBMIT_TRANSACTION", merchant, transaction, false);
@@ -94,6 +95,7 @@ public class TransactionService {
 	    ResponseEntity<String> e = restTemplate.postForEntity(uri, entity, String.class);
 	     
 	    JSONObject jsonObject = new JSONObject(e.getBody());
+	    System.out.println(jsonObject.toString());
 	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
 	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
 	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
