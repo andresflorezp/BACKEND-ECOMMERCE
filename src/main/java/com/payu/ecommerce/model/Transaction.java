@@ -73,7 +73,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return
+	 * @return the id
 	 */
 	public Long getId() {
 		return id;
@@ -87,7 +87,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return
+	 * @return the who transaction
 	 */
 	public String getWhoTransaction() {
 		return whoTransaction;
@@ -101,7 +101,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return
+	 * @return the state
 	 */
 	public String getState() {
 		return state;
@@ -115,7 +115,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return
+	 * @return the numberOrder
 	 */
 	public String getNumeroOrden() {
 		return orderNumber;
@@ -129,7 +129,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return
+	 * @return value Transaction
 	 */
 	public Double getValueTransaction() {
 		return valueTransaction;

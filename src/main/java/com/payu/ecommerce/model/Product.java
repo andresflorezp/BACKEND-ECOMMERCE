@@ -72,7 +72,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the id
 	 */
 	public Long getId() {
 		return id;
@@ -86,7 +86,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
@@ -100,7 +100,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the category
 	 */
 	public String getCategory() {
 		return category;
@@ -114,7 +114,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the description
 	 */
 	public String getDescription() {
 		return description;
@@ -128,7 +128,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the price
 	 */
 	public Double getPrice() {
 		return price;
@@ -142,7 +142,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the carts
 	 */
 	public List<Cart> getCarts() {
 		return carts;
@@ -156,7 +156,7 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 *
+	 * The representational string of the class Product
 	 */
 	@Override
 	public String toString() {

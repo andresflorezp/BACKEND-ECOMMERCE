@@ -70,17 +70,17 @@ public class TransactionService {
 	 * @param valor
 	 * @return
 	 */
-	public String generarResponse(String name, String email, Double valor) {
+	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate) {
 		TxValue tXVALUE = new TxValue(2000, "COP");
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
 		Order order = new Order("1", "TestPayu", "payment test", "es", additionalValues);
 		Payer payer = new Payer("1", name, "payer_test@test.com", "3877942", "5415668464654");
-		CreditCard creditCard = new CreditCard("4097440000000004", "321", "2024/12", name);
+		CreditCard creditCard = new CreditCard(card, cvv, expirationDate, name);
 		Merchant merchant = new  Merchant("012345678901", "012345678901");
 		com.payu.ecommerce.pojo.Transaction transaction = new com.payu.ecommerce.pojo.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
 		RequestTransaction requestTransaction = new  RequestTransaction("es", "SUBMIT_TRANSACTION", merchant, transaction, false);
 		final String uri = "https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi";
-	     
+	    
 		Gson gson = new Gson();
 	    RestTemplate restTemplate = new RestTemplate();
 	    String JSON = gson.toJson(requestTransaction);

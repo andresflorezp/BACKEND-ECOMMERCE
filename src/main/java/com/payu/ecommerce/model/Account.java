@@ -25,26 +25,49 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since 0.0.1
  */
 
+
 @Entity
 @Table(name = "account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	
+	/**
+	 * The id.
+	 */
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
+	/**
+	 * The email.
+	 */
 	private String email;
-
+	
+	/**
+	 *	The password.
+	 */
 	private String password;
-
+	
+	/**
+	 * The full Name
+	 */
 	private String fullName;
-
+	
+	/**
+	 * The enabled
+	 */
 	private Boolean enabled;
 
+	/**
+	 * The role
+	 */
 	private String role;
 
+	/**
+	 * The balance
+	 */
 	private Double balance;
 
 	@JsonIgnore
@@ -93,7 +116,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the email
 	 */
 	public String getEmail() {
 		return email;
@@ -107,7 +130,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
@@ -121,7 +144,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the full name
 	 */
 	public String getFullName() {
 		return fullName;
@@ -135,7 +158,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the enabled
 	 */
 	public Boolean getEnabled() {
 		return enabled;
@@ -149,7 +172,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the role
 	 */
 	public String getRole() {
 		return role;
@@ -163,7 +186,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the balance
 	 */
 	public Double getBalance() {
 		return balance;
@@ -177,7 +200,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the cart
 	 */
 	public Cart getCart() {
 		return cart;
@@ -191,7 +214,7 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 *
+	 * The representational String
 	 */
 	@Override
 	public String toString() {

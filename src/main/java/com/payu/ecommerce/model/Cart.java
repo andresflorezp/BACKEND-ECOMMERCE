@@ -80,7 +80,7 @@ public class Cart implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the id
 	 */
 	public Long getId() {
 		return id;
@@ -94,7 +94,7 @@ public class Cart implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the account
 	 */
 	public Account getAccount() {
 		return account;
@@ -108,7 +108,7 @@ public class Cart implements Serializable {
 	}
 
 	/**
-	 * @return
+	 * @return the all products
 	 */
 	public List<Product> getAllproducts() {
 		return allProducts;
