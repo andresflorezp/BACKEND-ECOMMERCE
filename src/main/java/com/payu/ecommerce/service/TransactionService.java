@@ -23,6 +23,7 @@ import com.payu.ecommerce.pojo.Payer;
 import com.payu.ecommerce.pojo.RequestTransaction;
 import com.payu.ecommerce.pojo.TxValue;
 import com.payu.ecommerce.repository.TransactionRepository;
+import com.payu.ecommerce.utils.TransactionJson;
 
 import java.util.*;
 
@@ -37,20 +38,11 @@ import java.util.*;
 
 @Service
 public class TransactionService {
-	private static final String ALPHA_NUMERIC_STRING = "123456789";
 
 	@Autowired
 	TransactionRepository transactionRepository;
 	
-	public static String randomAlphaNumeric(int count) {
-		StringBuilder builder = new StringBuilder();
-		while (count-- != 0) {
-			int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
-			builder.append(ALPHA_NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
-	
+
 	/**
 	 * @return
 	 */
@@ -71,20 +63,10 @@ public class TransactionService {
 	 * @return
 	 */
 	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate) {
-		expirationDate.replaceAll("$", "/");
-		TxValue tXVALUE = new TxValue(2000, "COP");
-		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
-		Order order = new Order("1", "TestPayu", "payment test", "es", additionalValues);
-		Payer payer = new Payer("1", name, "payer_test@test.com", "3877942", "5415668464654");
-		CreditCard creditCard = new CreditCard(card, cvv, "2024/12", name);
-		Merchant merchant = new  Merchant("012345678901", "012345678901");
-		com.payu.ecommerce.pojo.Transaction transaction = new com.payu.ecommerce.pojo.Transaction(order, payer, creditCard, "AUTHORIZATION_AND_CAPTURE", "VISA");
-		RequestTransaction requestTransaction = new  RequestTransaction("es", "SUBMIT_TRANSACTION", merchant, transaction, false);
-		final String uri = "https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi";
-	    
+		TransactionJson transactionJson = new TransactionJson(name, email, valor, card, cvv, expirationDate);
 		Gson gson = new Gson();
 	    RestTemplate restTemplate = new RestTemplate();
-	    String JSON = gson.toJson(requestTransaction);
+	    String JSON = gson.toJson(transactionJson.request());
 	    
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);  
@@ -92,7 +74,7 @@ public class TransactionService {
 	 
 	    HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
 	     
-	    ResponseEntity<String> e = restTemplate.postForEntity(uri, entity, String.class);
+	    ResponseEntity<String> e = restTemplate.postForEntity(TransactionJson.uri, entity, String.class);
 	     
 	    JSONObject jsonObject = new JSONObject(e.getBody());
 	    System.out.println(jsonObject.toString());
