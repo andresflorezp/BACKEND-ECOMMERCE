@@ -5,6 +5,7 @@
  */
 package com.payu.ecommerce.service;
 
+import com.payu.ecommerce.pojo.Utils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -41,7 +42,12 @@ public class TransactionService {
 
 	@Autowired
 	TransactionRepository transactionRepository;
-	
+
+	@Autowired
+	Utils util2;
+
+
+
 
 	/**
 	 * The all transactions
@@ -59,12 +65,14 @@ public class TransactionService {
 	
 	/**
 	 * This function allows you to connect to the payment api and obtain the indicated values of the transaction
+	 * --------------Save all answer request
 	 * @param name
 	 * @param email
 	 * @param valor
 	 * @return
 	 */
 	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate) {
+		//System.out.println(util.getMerchantApiKey());
 		TransactionJson transactionJson = new TransactionJson(name, email, valor, card, cvv, expirationDate);
 		Gson gson = new Gson();
 	    RestTemplate restTemplate = new RestTemplate();
@@ -76,7 +84,7 @@ public class TransactionService {
 	 
 	    HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
 	     
-	    ResponseEntity<String> e = restTemplate.postForEntity(TransactionJson.uri, entity, String.class);
+	    ResponseEntity<String> e = restTemplate.postForEntity(util2.getUri(), entity, String.class);
 	     
 	    JSONObject jsonObject = new JSONObject(e.getBody());
 	    System.out.println(jsonObject.toString());
