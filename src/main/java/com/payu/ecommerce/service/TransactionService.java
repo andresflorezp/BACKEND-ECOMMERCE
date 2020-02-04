@@ -44,8 +44,7 @@ public class TransactionService {
 	TransactionRepository transactionRepository;
 
 	@Autowired
-	Utils util2;
-
+	TransactionJson transactionJson;
 
 
 
@@ -73,10 +72,11 @@ public class TransactionService {
 	 */
 	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate) {
 		//System.out.println(util.getMerchantApiKey());
-		TransactionJson transactionJson = new TransactionJson(name, email, valor, card, cvv, expirationDate);
+		//System.out.println(util.toString());
+
 		Gson gson = new Gson();
 	    RestTemplate restTemplate = new RestTemplate();
-	    String JSON = gson.toJson(transactionJson.request());
+	    String JSON = gson.toJson(transactionJson.request(name, email, String.valueOf(valor),card,cvv,expirationDate));
 	    
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);  
@@ -84,7 +84,7 @@ public class TransactionService {
 	 
 	    HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
 	     
-	    ResponseEntity<String> e = restTemplate.postForEntity(util2.getUri(), entity, String.class);
+	    ResponseEntity<String> e = restTemplate.postForEntity("https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi", entity, String.class);
 	     
 	    JSONObject jsonObject = new JSONObject(e.getBody());
 	    System.out.println(jsonObject.toString());

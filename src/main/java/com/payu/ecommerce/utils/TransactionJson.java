@@ -14,6 +14,9 @@ import com.payu.ecommerce.pojo.RequestTransaction;
 import com.payu.ecommerce.pojo.TxValue;
 import com.payu.ecommerce.pojo.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * The Class TransactionJson.
@@ -22,48 +25,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 0.0.1
  * @since 0.0.1
  */
-
+@Service
 public class TransactionJson {
 
 	@Autowired
 	Utils util;
 
-
-	private String name;
-	private String email;
-	private Double valor;
-	private String card;
-	private String cvv;
-	private String expirationDate;
-	
-	
-	
-	/**
-	 * @param name
-	 * @param email
-	 * @param valor
-	 * @param card
-	 * @param cvv
-	 * @param expirationDate
-	 */
-	public TransactionJson(String name, String email, Double valor, String card, String cvv, String expirationDate) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.valor = valor;
-		this.card = card;
-		this.cvv = cvv;
-		this.expirationDate = expirationDate;
-	}
-
-
-
 	/**
 	 * This function allows to create the request with the instance to map the payments api
 	 * @return
 	 */
-	public RequestTransaction request() {
-		System.out.println(util.getCurrency());
+	public RequestTransaction request(String name, String email, String valor, String card, String cvv, String expirationDate) {
+		//System.out.println(util.getCurrency());
 		TxValue tXVALUE = new TxValue(2000, util.getCurrency());
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
 		Order order = new Order(util.getOrderNumber(), util.getReferenceCode(), util.getDescriptionOrder(), util.getLanguage(), additionalValues);
@@ -74,8 +47,7 @@ public class TransactionJson {
 		RequestTransaction requestTransaction = new  RequestTransaction(util.getLanguage(), util.getCommand(), merchant, transaction, false);
 		System.out.println(requestTransaction.toString());
 		return requestTransaction;
-		
-		
+
 	}
 
 }

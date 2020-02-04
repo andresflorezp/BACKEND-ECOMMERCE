@@ -205,4 +205,26 @@ public class Utils {
 
 		this.uri = uri;
 	}
+
+	@Override public String toString() {
+
+		return "Utils{" +
+				"txValue='" + txValue + '\'' +
+				", currency='" + currency + '\'' +
+				", orderNumber='" + orderNumber + '\'' +
+				", descriptionOrder='" + descriptionOrder + '\'' +
+				", language='" + language + '\'' +
+				", payerNumber='" + payerNumber + '\'' +
+				", contactNUmber='" + contactNUmber + '\'' +
+				", dniNumber='" + dniNumber + '\'' +
+				", merchantApiLogin='" + merchantApiLogin + '\'' +
+				", merchantApiKey='" + merchantApiKey + '\'' +
+				", type='" + type + '\'' +
+				", paymentMethod='" + paymentMethod + '\'' +
+				", command='" + command + '\'' +
+				", referenceCode='" + referenceCode + '\'' +
+				", expirationDate='" + expirationDate + '\'' +
+				", uri='" + uri + '\'' +
+				'}';
+	}
 }
