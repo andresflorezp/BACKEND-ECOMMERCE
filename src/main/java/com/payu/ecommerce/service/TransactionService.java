@@ -83,13 +83,13 @@ public class TransactionService {
 	
 	/**
 	 * This function allows you to connect to the payment api and obtain the indicated values of the transaction
-	 * --------------Save all answer request
+	 *
 	 * @param name
 	 * @param email
 	 * @param valor
 	 * @return
 	 */
-	public String generarResponse(String name, String email, Double valor, String card,String cvv, String expirationDate)
+	public String doPaymentsAPI(String name, String email, Double valor, String card,String cvv, String expirationDate)
 			throws IOException {
 
 		Gson gson = new Gson();
@@ -108,6 +108,26 @@ public class TransactionService {
 		JsonNode jsonNode = convertJsonFormat(jsonObject);
 		ObjectMapper mapper = new ObjectMapper();
 		ResponseTransaction responseTransaction = mapper.readValue(new TreeTraversingParser(jsonNode),ResponseTransaction.class);
+
+
+		responseTransaction.setTransactionResponse(buildTransaction(jsonObject));
+		responseTransactionRepository.save(responseTransaction);
+	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
+	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
+	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
+	    return state;
+		
+		
+		
+	}
+
+	/**
+	 * This method allow create the transaction Response, from of Json Object
+	 * @param jsonObject
+	 * @return
+	 */
+	public static TransactionResponse buildTransaction(JSONObject jsonObject){
+
 		ExtraParameters extraParameters = new ExtraParameters();
 		extraParameters.setBankReferenceCode(jsonObject.getJSONObject("transactionResponse").getJSONObject("extraParameters").get("BANK_REFERENCED_CODE").toString());
 		extraParameters.setBankReferenceCode(jsonObject.getJSONObject("transactionResponse").getJSONObject("extraParameters").get("PAYMENT_WAY_ID").toString());
@@ -130,17 +150,15 @@ public class TransactionService {
 		transactionResponse.setResponseMessage(jsonObject.getJSONObject("transactionResponse").get("responseMessage").toString());
 		transactionResponse.setTrazabilityCode(jsonObject.getJSONObject("transactionResponse").get("trazabilityCode").toString());
 
-		responseTransaction.setTransactionResponse(transactionResponse);
-		responseTransactionRepository.save(responseTransaction);
-	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
-	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
-	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
-	    return state;
-		
-		
-		
+		return transactionResponse;
+
 	}
 
+	/**
+	 * This method convert a Json Object to Json Node
+	 * @param json
+	 * @return
+	 */
 	static JsonNode convertJsonFormat(JSONObject json) {
 		ObjectNode ret = JsonNodeFactory.instance.objectNode();
 
@@ -176,6 +194,11 @@ public class TransactionService {
 		return ret;
 	}
 
+	/**
+	 * This method convert to Json Array to Json Node
+	 * @param json
+	 * @return
+	 */
 	static JsonNode convertJsonFormat(JSONArray json) {
 		ArrayNode ret = JsonNodeFactory.instance.arrayNode();
 		for (int i = 0; i < json.length(); i++) {
