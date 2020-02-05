@@ -63,6 +63,11 @@ public class TransactionController {
 
 	}
 
+	/**
+	 * This controller create of refund
+	 * @param numeroOrden
+	 * @return
+	 */
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT, value = "/dorefund/{numeroOrden}")
 	public ResponseEntity<?> doRefundTransaction(@PathVariable("numeroOrden") String numeroOrden) {
