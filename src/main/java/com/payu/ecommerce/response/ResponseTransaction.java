@@ -1,12 +1,33 @@
 package com.payu.ecommerce.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
-public class ResponseTransaction {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.io.Serializable;
 
+@Entity
+@Table(name = "responsetransaction")
+
+public class ResponseTransaction implements Serializable {
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String code;
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private TransactionResponse transactionResponse;
-	private Object error;
+
+	private String error;
 
 	/**
 	 * No args constructor for use in serialization
@@ -21,7 +42,7 @@ public class ResponseTransaction {
 	 * @param transactionResponse
 	 * @param error
 	 */
-	public ResponseTransaction(String code, TransactionResponse transactionResponse, Object error) {
+	public ResponseTransaction(String code, TransactionResponse transactionResponse, String error) {
 		super();
 		this.code = code;
 		this.transactionResponse = transactionResponse;
@@ -44,11 +65,11 @@ public class ResponseTransaction {
 		this.transactionResponse = transactionResponse;
 	}
 
-	public Object getError() {
+	public String getError() {
 		return error;
 	}
 
-	public void setError(Object error) {
+	public void setError(String error) {
 		this.error = error;
 	}
 

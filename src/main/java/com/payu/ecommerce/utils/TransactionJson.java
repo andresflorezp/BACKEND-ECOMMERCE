@@ -36,8 +36,7 @@ public class TransactionJson {
 	 * @return
 	 */
 	public RequestTransaction request(String name, String email, String valor, String card, String cvv, String expirationDate) {
-		//System.out.println(util.getCurrency());
-		TxValue tXVALUE = new TxValue(2000, util.getCurrency());
+		TxValue tXVALUE = new TxValue(Integer.parseInt(util.getTxValue()), util.getCurrency());
 		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
 		Order order = new Order(util.getOrderNumber(), util.getReferenceCode(), util.getDescriptionOrder(), util.getLanguage(), additionalValues);
 		Payer payer = new Payer(util.getPayerNumber(), name, email, util.getContactNUmber(), util.getDniNumber());

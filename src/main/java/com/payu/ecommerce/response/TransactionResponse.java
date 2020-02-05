@@ -1,26 +1,46 @@
 package com.payu.ecommerce.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.payu.ecommerce.model.Account;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class TransactionResponse {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-	private Integer operationDate;
-	private Object paymentNetworkResponseErrorMessage;
-	private Integer orderId;
+@Entity
+@Table(name = "TransactionResponse")
+public class TransactionResponse {
+	@Id
+	private Long id;
+	private String operationDate;
+	private String paymentNetworkResponseErrorMessage;
+	private String orderId;
 	private String authorizationCode;
-	private Object referenceQuestionnaire;
-	private Object pendingReason;
-	private Object errorCode;
+	private String referenceQuestionnaire;
+	private String pendingReason;
+	private String errorCode;
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ExtraParameters extraParameters;
-	private Object transactionDate;
-	private Object transactionTime;
+	private String transactionDate;
+	private String transactionTime;
 	private String transactionId;
 	private String responseCode;
 	private String paymentNetworkResponseCode;
-	private Object additionalInfo;
+	private String additionalInfo;
 	private String state;
-	private Object responseMessage;
+	private String responseMessage;
 	private String trazabilityCode;
+
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "response_id")
+	private ResponseTransaction responseTransaction;
 
 	/**
 	 * No args constructor for use in serialization
@@ -49,7 +69,7 @@ public class TransactionResponse {
 	 * @param responseMessage
 	 * @param trazabilityCode
 	 */
-	public TransactionResponse(Integer operationDate, Object paymentNetworkResponseErrorMessage, Integer orderId, String authorizationCode, Object referenceQuestionnaire, Object pendingReason, Object errorCode, ExtraParameters extraParameters, Object transactionDate, Object transactionTime, String transactionId, String responseCode, String paymentNetworkResponseCode, Object additionalInfo, String state, Object responseMessage, String trazabilityCode) {
+	public TransactionResponse(String operationDate, String paymentNetworkResponseErrorMessage, String orderId, String authorizationCode, String referenceQuestionnaire, String pendingReason, String errorCode, ExtraParameters extraParameters, String transactionDate, String transactionTime, String transactionId, String responseCode, String paymentNetworkResponseCode, String additionalInfo, String state, String responseMessage, String trazabilityCode) {
 		super();
 		this.operationDate = operationDate;
 		this.paymentNetworkResponseErrorMessage = paymentNetworkResponseErrorMessage;
@@ -70,27 +90,27 @@ public class TransactionResponse {
 		this.trazabilityCode = trazabilityCode;
 	}
 
-	public Integer getOperationDate() {
+	public String getOperationDate() {
 		return operationDate;
 	}
 
-	public void setOperationDate(Integer operationDate) {
+	public void setOperationDate(String operationDate) {
 		this.operationDate = operationDate;
 	}
 
-	public Object getPaymentNetworkResponseErrorMessage() {
+	public String getPaymentNetworkResponseErrorMessage() {
 		return paymentNetworkResponseErrorMessage;
 	}
 
-	public void setPaymentNetworkResponseErrorMessage(Object paymentNetworkResponseErrorMessage) {
+	public void setPaymentNetworkResponseErrorMessage(String paymentNetworkResponseErrorMessage) {
 		this.paymentNetworkResponseErrorMessage = paymentNetworkResponseErrorMessage;
 	}
 
-	public Integer getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
@@ -102,27 +122,27 @@ public class TransactionResponse {
 		this.authorizationCode = authorizationCode;
 	}
 
-	public Object getReferenceQuestionnaire() {
+	public String getReferenceQuestionnaire() {
 		return referenceQuestionnaire;
 	}
 
-	public void setReferenceQuestionnaire(Object referenceQuestionnaire) {
+	public void setReferenceQuestionnaire(String referenceQuestionnaire) {
 		this.referenceQuestionnaire = referenceQuestionnaire;
 	}
 
-	public Object getPendingReason() {
+	public String getPendingReason() {
 		return pendingReason;
 	}
 
-	public void setPendingReason(Object pendingReason) {
+	public void setPendingReason(String pendingReason) {
 		this.pendingReason = pendingReason;
 	}
 
-	public Object getErrorCode() {
+	public String getErrorCode() {
 		return errorCode;
 	}
 
-	public void setErrorCode(Object errorCode) {
+	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 	}
 
@@ -134,19 +154,19 @@ public class TransactionResponse {
 		this.extraParameters = extraParameters;
 	}
 
-	public Object getTransactionDate() {
+	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Object transactionDate) {
+	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 
-	public Object getTransactionTime() {
+	public String getTransactionTime() {
 		return transactionTime;
 	}
 
-	public void setTransactionTime(Object transactionTime) {
+	public void setTransactionTime(String transactionTime) {
 		this.transactionTime = transactionTime;
 	}
 
@@ -174,11 +194,11 @@ public class TransactionResponse {
 		this.paymentNetworkResponseCode = paymentNetworkResponseCode;
 	}
 
-	public Object getAdditionalInfo() {
+	public String getAdditionalInfo() {
 		return additionalInfo;
 	}
 
-	public void setAdditionalInfo(Object additionalInfo) {
+	public void setAdditionalInfo(String additionalInfo) {
 		this.additionalInfo = additionalInfo;
 	}
 
@@ -190,11 +210,11 @@ public class TransactionResponse {
 		this.state = state;
 	}
 
-	public Object getResponseMessage() {
+	public String getResponseMessage() {
 		return responseMessage;
 	}
 
-	public void setResponseMessage(Object responseMessage) {
+	public void setResponseMessage(String responseMessage) {
 		this.responseMessage = responseMessage;
 	}
 

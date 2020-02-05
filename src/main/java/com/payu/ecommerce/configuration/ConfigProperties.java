@@ -25,5 +25,16 @@ public class ConfigProperties {
 						 env.getProperty("util.uri"));
 	}
 
+	@Bean
+	public Utils util2() {
+
+		return new Utils(env.getProperty("util.txValue"),env.getProperty("util.currency"),env.getProperty("util.orderNumber"),
+						 env.getProperty("util.descriptionOrder"),env.getProperty("util.language"),env.getProperty("util.payerNumber"),
+						 env.getProperty("util.contactNUmber"),env.getProperty("util.dniNumber"),env.getProperty("util.merchantApiLogin"),
+						 env.getProperty("util.merchantApiKey"),env.getProperty("util.type"),env.getProperty("util.paymentMethod"),
+						 env.getProperty("util.command"),env.getProperty("util.referenceCode"),env.getProperty("util.expirationDate"),
+						 env.getProperty("util.uri"));
+	}
+
 
 }
