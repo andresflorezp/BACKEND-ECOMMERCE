@@ -114,12 +114,52 @@ public class TransactionService {
 		responseTransactionRepository.save(responseTransaction);
 	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
 	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
-	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
+		String transactionId= jsonObject.getJSONObject("transactionResponse").get("transactionId").toString();
+	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor,transactionId));
 	    return state;
 		
 		
 		
 	}
+
+	/**
+	 * This method allow refund in payment
+	 * @param numeroOrden
+	 * @return
+	 */
+	public String doRefund(String numeroOrden){
+		Gson gson = new Gson();
+		RestTemplate restTemplate = new RestTemplate();
+		Transaction tempTransaction = null;
+		for(Transaction tr:transactionRepository.findAll()){
+			System.out.println(tr.getOrderNumber());
+			if(tr.getOrderNumber().equals(numeroOrden)){
+				tempTransaction = tr;
+				tempTransaction.setState("REFUND");
+				System.out.println(tempTransaction);
+				transactionRepository.save(tr);
+				break;
+			}
+		}
+		String JSON = gson.toJson(transactionJson.requestRefund(tempTransaction));
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
+		ResponseEntity<String> e = restTemplate.postForEntity(util2.getUri(), entity, String.class);
+		JSONObject jsonObject = new JSONObject(e.getBody());
+		System.out.println(jsonObject.toString());
+		System.out.println("se realizo refund");
+		String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
+		return state;
+
+
+
+	}
+
+
+
+
 
 	/**
 	 * This method allow create the transaction Response, from of Json Object

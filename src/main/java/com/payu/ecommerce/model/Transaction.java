@@ -50,6 +50,11 @@ public class Transaction {
 	private Double valueTransaction;
 
 	/**
+	 * The transaction Id
+	 */
+	private String transactionId;
+
+	/**
 	 * @param id
 	 * @param whoTransaction
 	 * @param state
@@ -63,6 +68,25 @@ public class Transaction {
 		this.state = state;
 		this.orderNumber = numeroOrden;
 		this.valueTransaction = valueTransaction;
+
+	}
+
+	/**
+	 *
+	 * @param whoTransaction
+	 * @param state
+	 * @param numeroOrden
+	 * @param valueTransaction
+	 * @param transactionId
+	 */
+	public Transaction(String whoTransaction, String state, String numeroOrden, Double valueTransaction,String transactionId) {
+		super();
+		this.id = id;
+		this.whoTransaction = whoTransaction;
+		this.state = state;
+		this.orderNumber = numeroOrden;
+		this.valueTransaction = valueTransaction;
+		this.transactionId = transactionId;
 	}
 
 	/**
@@ -158,12 +182,50 @@ public class Transaction {
 	}
 
 	/**
-	 * The representational string of the class Transaction
+	 *
+	 * @return
 	 */
-	@Override
-	public String toString() {
-		return "Transaction [id=" + id + ", whoTransaction=" + whoTransaction + ", state=" + state + ", numeroOrden="
-				+ orderNumber + ", valueTransaction=" + valueTransaction + "]";
+	public String getOrderNumber() {
+
+		return orderNumber;
 	}
 
+	/**
+	 *
+	 * @param orderNumber
+	 */
+	public void setOrderNumber(String orderNumber) {
+
+		this.orderNumber = orderNumber;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public String getTransactionId() {
+
+		return transactionId;
+	}
+
+	/**
+	 *
+	 * @param transactionId
+	 */
+	public void setTransactionId(String transactionId) {
+
+		this.transactionId = transactionId;
+	}
+
+	@Override public String toString() {
+
+		return "Transaction{" +
+				"id=" + id +
+				", whoTransaction='" + whoTransaction + '\'' +
+				", state='" + state + '\'' +
+				", orderNumber='" + orderNumber + '\'' +
+				", valueTransaction=" + valueTransaction +
+				", transactionId='" + transactionId + '\'' +
+				'}';
+	}
 }
