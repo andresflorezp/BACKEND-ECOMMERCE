@@ -108,14 +108,30 @@ public class TransactionService {
 		JsonNode jsonNode = convertJsonFormat(jsonObject);
 		ObjectMapper mapper = new ObjectMapper();
 		ResponseTransaction responseTransaction = mapper.readValue(new TreeTraversingParser(jsonNode),ResponseTransaction.class);
-		System.out.println("MAPEO-----------");
-		System.out.println(responseTransaction.toString());
 		ExtraParameters extraParameters = new ExtraParameters();
+		extraParameters.setBankReferenceCode(jsonObject.getJSONObject("transactionResponse").getJSONObject("extraParameters").get("BANK_REFERENCED_CODE").toString());
+		extraParameters.setBankReferenceCode(jsonObject.getJSONObject("transactionResponse").getJSONObject("extraParameters").get("PAYMENT_WAY_ID").toString());
 		TransactionResponse transactionResponse = new TransactionResponse();
 		transactionResponse.setExtraParameters(extraParameters);
+
+		transactionResponse.setOperationDate(jsonObject.getJSONObject("transactionResponse").get("operationDate").toString());
+		transactionResponse.setPaymentNetworkResponseErrorMessage(jsonObject.getJSONObject("transactionResponse").get("paymentNetworkResponseErrorMessage").toString());
+		transactionResponse.setOrderId(jsonObject.getJSONObject("transactionResponse").get("orderId").toString());
+		transactionResponse.setAuthorizationCode(jsonObject.getJSONObject("transactionResponse").get("authorizationCode").toString());
+		transactionResponse.setReferenceQuestionnaire(jsonObject.getJSONObject("transactionResponse").get("referenceQuestionnaire").toString());
+		transactionResponse.setPendingReason(jsonObject.getJSONObject("transactionResponse").get("pendingReason").toString());
+		transactionResponse.setErrorCode(jsonObject.getJSONObject("transactionResponse").get("errorCode").toString());
+		transactionResponse.setTransactionDate(jsonObject.getJSONObject("transactionResponse").get("transactionDate").toString());
+		transactionResponse.setTransactionId(jsonObject.getJSONObject("transactionResponse").get("transactionId").toString());
+		transactionResponse.setResponseCode(jsonObject.getJSONObject("transactionResponse").get("responseCode").toString());
+		transactionResponse.setPaymentNetworkResponseErrorMessage(jsonObject.getJSONObject("transactionResponse").get("paymentNetworkResponseCode").toString());
+		transactionResponse.setAdditionalInfo(jsonObject.getJSONObject("transactionResponse").get("additionalInfo").toString());
+		transactionResponse.setState(jsonObject.getJSONObject("transactionResponse").get("state").toString());
+		transactionResponse.setResponseMessage(jsonObject.getJSONObject("transactionResponse").get("responseMessage").toString());
+		transactionResponse.setTrazabilityCode(jsonObject.getJSONObject("transactionResponse").get("trazabilityCode").toString());
+
 		responseTransaction.setTransactionResponse(transactionResponse);
 		responseTransactionRepository.save(responseTransaction);
-		System.out.println("Lo Guardo");
 	    String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
 	    String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
 	    transactionRepository.save(new Transaction( name, state, numeroOrden, valor));
