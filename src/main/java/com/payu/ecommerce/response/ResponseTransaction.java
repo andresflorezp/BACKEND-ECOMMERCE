@@ -1,10 +1,7 @@
 package com.payu.ecommerce.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -42,8 +39,9 @@ public class ResponseTransaction implements Serializable {
 	 * @param transactionResponse
 	 * @param error
 	 */
-	public ResponseTransaction(String code, TransactionResponse transactionResponse, String error) {
+	public ResponseTransaction(Long id,String code, TransactionResponse transactionResponse, String error) {
 		super();
+		this.id = id;
 		this.code = code;
 		this.transactionResponse = transactionResponse;
 		this.error = error;
@@ -63,6 +61,7 @@ public class ResponseTransaction implements Serializable {
 
 	public void setTransactionResponse(TransactionResponse transactionResponse) {
 		this.transactionResponse = transactionResponse;
+
 	}
 
 	public String getError() {
@@ -71,6 +70,16 @@ public class ResponseTransaction implements Serializable {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public Long getId() {
+
+		return id;
+	}
+
+	public void setId(Long id) {
+
+		this.id = id;
 	}
 
 	@Override

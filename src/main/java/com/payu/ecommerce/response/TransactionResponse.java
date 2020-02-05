@@ -1,12 +1,12 @@
 package com.payu.ecommerce.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.payu.ecommerce.model.Account;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Table(name = "TransactionResponse")
 public class TransactionResponse {
 	@Id
+	@GeneratedValue
 	private Long id;
 	private String operationDate;
 	private String paymentNetworkResponseErrorMessage;
@@ -69,7 +70,7 @@ public class TransactionResponse {
 	 * @param responseMessage
 	 * @param trazabilityCode
 	 */
-	public TransactionResponse(String operationDate, String paymentNetworkResponseErrorMessage, String orderId, String authorizationCode, String referenceQuestionnaire, String pendingReason, String errorCode, ExtraParameters extraParameters, String transactionDate, String transactionTime, String transactionId, String responseCode, String paymentNetworkResponseCode, String additionalInfo, String state, String responseMessage, String trazabilityCode) {
+	public TransactionResponse(Long id, ResponseTransaction responseTransaction,String operationDate, String paymentNetworkResponseErrorMessage, String orderId, String authorizationCode, String referenceQuestionnaire, String pendingReason, String errorCode, ExtraParameters extraParameters, String transactionDate, String transactionTime, String transactionId, String responseCode, String paymentNetworkResponseCode, String additionalInfo, String state, String responseMessage, String trazabilityCode) {
 		super();
 		this.operationDate = operationDate;
 		this.paymentNetworkResponseErrorMessage = paymentNetworkResponseErrorMessage;
@@ -88,6 +89,8 @@ public class TransactionResponse {
 		this.state = state;
 		this.responseMessage = responseMessage;
 		this.trazabilityCode = trazabilityCode;
+		this.id = id;
+		this.responseTransaction = responseTransaction;
 	}
 
 	public String getOperationDate() {
@@ -152,6 +155,7 @@ public class TransactionResponse {
 
 	public void setExtraParameters(ExtraParameters extraParameters) {
 		this.extraParameters = extraParameters;
+
 	}
 
 	public String getTransactionDate() {
@@ -224,6 +228,26 @@ public class TransactionResponse {
 
 	public void setTrazabilityCode(String trazabilityCode) {
 		this.trazabilityCode = trazabilityCode;
+	}
+
+	public Long getId() {
+
+		return id;
+	}
+
+	public void setId(Long id) {
+
+		this.id = id;
+	}
+
+	public ResponseTransaction getResponseTransaction() {
+
+		return responseTransaction;
+	}
+
+	public void setResponseTransaction(ResponseTransaction responseTransaction) {
+
+		this.responseTransaction = responseTransaction;
 	}
 
 	@Override
