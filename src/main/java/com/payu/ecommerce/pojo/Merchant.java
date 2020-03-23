@@ -15,7 +15,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since 0.0.1
  */
 
-
 public class Merchant {
 
 	/**
@@ -40,6 +39,7 @@ public class Merchant {
 	 * @param apiKey
 	 */
 	public Merchant(String apiLogin, String apiKey) {
+
 		super();
 		this.apiLogin = apiLogin;
 		this.apiKey = apiKey;
@@ -49,6 +49,7 @@ public class Merchant {
 	 * @return
 	 */
 	public String getApiLogin() {
+
 		return apiLogin;
 	}
 
@@ -56,6 +57,7 @@ public class Merchant {
 	 * @param apiLogin
 	 */
 	public void setApiLogin(String apiLogin) {
+
 		this.apiLogin = apiLogin;
 	}
 
@@ -63,6 +65,7 @@ public class Merchant {
 	 * @return
 	 */
 	public String getApiKey() {
+
 		return apiKey;
 	}
 
@@ -70,6 +73,7 @@ public class Merchant {
 	 * @param apiKey
 	 */
 	public void setApiKey(String apiKey) {
+
 		this.apiKey = apiKey;
 	}
 
@@ -78,6 +82,7 @@ public class Merchant {
 	 */
 	@Override
 	public String toString() {
+
 		return new ToStringBuilder(this).append("apiLogin", apiLogin).append("apiKey", apiKey).toString();
 	}
 

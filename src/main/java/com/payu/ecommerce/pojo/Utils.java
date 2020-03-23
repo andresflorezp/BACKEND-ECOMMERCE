@@ -19,7 +19,6 @@ public class Utils {
 	private String uri;
 
 
-
 	public Utils(){
 
 	}

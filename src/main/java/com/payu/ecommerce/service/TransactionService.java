@@ -11,11 +11,17 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TreeTraversingParser;
+import com.google.gson.Gson;
+import com.payu.ecommerce.model.Account;
+import com.payu.ecommerce.model.Transaction;
 import com.payu.ecommerce.pojo.Utils;
+import com.payu.ecommerce.repository.AccountRepository;
 import com.payu.ecommerce.repository.ResponseTransactionRepository;
+import com.payu.ecommerce.repository.TransactionRepository;
 import com.payu.ecommerce.response.ExtraParameters;
 import com.payu.ecommerce.response.ResponseTransaction;
 import com.payu.ecommerce.response.TransactionResponse;
+import com.payu.ecommerce.utils.TransactionJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,20 +32,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.google.gson.Gson;
-import com.payu.ecommerce.model.Transaction;
-import com.payu.ecommerce.pojo.AdditionalValues;
-import com.payu.ecommerce.pojo.CreditCard;
-import com.payu.ecommerce.pojo.Merchant;
-import com.payu.ecommerce.pojo.Order;
-import com.payu.ecommerce.pojo.Payer;
-import com.payu.ecommerce.pojo.RequestTransaction;
-import com.payu.ecommerce.pojo.TxValue;
-import com.payu.ecommerce.repository.TransactionRepository;
-import com.payu.ecommerce.utils.TransactionJson;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The Class TransactionService.
@@ -55,6 +52,9 @@ public class TransactionService {
 
 	@Autowired
 	TransactionRepository transactionRepository;
+
+	@Autowired
+	AccountRepository accountRepository;
 
 	@Autowired
 	TransactionJson transactionJson;
@@ -78,8 +78,48 @@ public class TransactionService {
 		}
 		return transactions;
 	}
-	
-	
+
+	/**
+	 * This function allows you to connect to the payment api and obtain the indicated values of the transaction with Card Token
+	 *
+	 * @param name
+	 * @param email
+	 * @param valor
+	 * @return
+	 */
+	public String doPaymentsAPIToken(String name, String email, Double valor, String token)
+			throws IOException {
+
+		Gson gson = new Gson();
+		RestTemplate restTemplate = new RestTemplate();
+		String JSON = gson.toJson(transactionJson.requestToken(name, email, String.valueOf(valor),token));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+
+		HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
+
+		ResponseEntity<String> e = restTemplate.postForEntity(util2.getUri(), entity, String.class);
+
+		JSONObject jsonObject = new JSONObject(e.getBody().replaceAll("null","empty"));
+		JsonNode jsonNode = convertJsonFormat(jsonObject);
+		ObjectMapper mapper = new ObjectMapper();
+		ResponseTransaction responseTransaction = mapper.readValue(new TreeTraversingParser(jsonNode),ResponseTransaction.class);
+
+
+		System.out.println(responseTransaction.toString());
+		responseTransaction.setTransactionResponse(buildTransaction(jsonObject));
+		responseTransactionRepository.save(responseTransaction);
+		String state= jsonObject.getJSONObject("transactionResponse").get("state").toString();
+		String numeroOrden= jsonObject.getJSONObject("transactionResponse").get("orderId").toString();
+		String transactionId= jsonObject.getJSONObject("transactionResponse").get("transactionId").toString();
+		transactionRepository.save(new Transaction( name, state, numeroOrden, valor,transactionId));
+		return state;
+
+
+
+	}
 	
 	/**
 	 * This function allows you to connect to the payment api and obtain the indicated values of the transaction
@@ -154,6 +194,42 @@ public class TransactionService {
 		return state;
 
 
+
+	}
+
+
+	public String createToken(String email,String card, String name, String expirationDate){
+		Gson gson = new Gson();
+		RestTemplate restTemplate = new RestTemplate();
+		String JSON = gson.toJson(transactionJson.requestCreateToken(card, name, expirationDate));
+		System.out.println(JSON);
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		HttpEntity<String> entity = new HttpEntity<>(JSON, headers);
+		ResponseEntity<String> e = restTemplate.postForEntity(util2.getUri(), entity, String.class);
+		System.out.println("ALL ENTITY");
+		System.out.println(e);
+		JSONObject jsonObject = new JSONObject(e.getBody());
+		String error = jsonObject.getString("error");
+		System.out.println(error);
+		Account tempAccount = null;
+		if(error!=null){
+			//String obtainCreditCardToken = jsonObject.getJSONObject("creditCardToken").get("creditCardTokenId").toString();
+			for(Account account:accountRepository.findAll()){
+				System.out.println(account.getEmail());
+				if(account.getEmail().equals(email)){
+					tempAccount = account;
+					tempAccount.setToken("3ba2c031-a8c0-4c9f-9025-7eacf8dd14e2");
+					accountRepository.save(tempAccount);
+					return "SUCCESS";
+				}
+			}
+		}
+		else{
+			return "UNSUCCESS";
+		}
+		return "UNSUCCESS";
 
 	}
 

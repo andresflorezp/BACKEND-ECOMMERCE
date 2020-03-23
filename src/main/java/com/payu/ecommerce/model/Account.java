@@ -5,7 +5,7 @@
  */
 package com.payu.ecommerce.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,8 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 
 /**
  * The Class Account.
@@ -70,6 +69,11 @@ public class Account implements Serializable {
 	 */
 	private Double balance;
 
+	/**
+	 * The card Token
+	 */
+	private String token;
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Cart cart;
@@ -89,7 +93,7 @@ public class Account implements Serializable {
 	 * @param cart
 	 */
 	public Account(Long id, String email, String password, String fullName, Boolean enabled, String role,
-			Double balance, Cart cart) {
+			Double balance, Cart cart,String token) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -99,6 +103,7 @@ public class Account implements Serializable {
 		this.role = role;
 		this.balance = balance;
 		this.cart = cart;
+		this.token = token;
 	}
 
 	/**
@@ -214,12 +219,38 @@ public class Account implements Serializable {
 	}
 
 	/**
-	 * The representational String
+	 *
+	 * @return token
 	 */
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-				+ ", enabled=" + enabled + ", role=" + role + ", balance=" + balance + ", cart=" + cart + "]";
+	public String getToken() {
+
+		return token;
 	}
 
+	/**
+	 *
+	 * @param token
+	 */
+	public void setToken(String token) {
+
+		this.token = token;
+	}
+
+	/**
+	 * The representational String
+	 */
+	@Override public String toString() {
+
+		return "Account{" +
+				"id=" + id +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", fullName='" + fullName + '\'' +
+				", enabled=" + enabled +
+				", role='" + role + '\'' +
+				", balance=" + balance +
+				", token='" + token + '\'' +
+				", cart=" + cart +
+				'}';
+	}
 }

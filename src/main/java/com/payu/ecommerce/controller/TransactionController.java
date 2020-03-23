@@ -5,16 +5,15 @@
  */
 package com.payu.ecommerce.controller;
 
+import com.payu.ecommerce.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.payu.ecommerce.service.TransactionService;
 
 /**
  * The Class TransactionController.
@@ -56,6 +55,46 @@ public class TransactionController {
 			@PathVariable("valor") Double value,@PathVariable("card") String card,@PathVariable("cvv") String cvv,@PathVariable("expiration") String expiration) {
 		try {
 			return new ResponseEntity<>(transactionService.doPaymentsAPI(name, email, value,card,cvv,expiration), HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
+		}
+
+	}
+
+	/**
+	 * This controller allow create transaction
+	 * @param name
+	 * @param email
+	 * @param value
+	 * @return
+	 */
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.POST, value = "/add-product-token/{name}/{email}/{valor}/{token}")
+	public ResponseEntity<?> addProductToken(@PathVariable("name") String name, @PathVariable("email") String email,
+										@PathVariable("valor") Double value,@PathVariable("token") String token) {
+		try {
+			return new ResponseEntity<>(transactionService.doPaymentsAPIToken(name, email, value,token), HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);
+		}
+
+	}
+
+	/**
+	 *
+	 * @param email
+	 * @param card
+	 * @param name
+	 * @param expirationDate
+	 * @return
+	 */
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.PUT, value = "/createToken/{email}/{card}/{name}/{expirationDate}")
+	public ResponseEntity<?> doCreateToken(@PathVariable("email") String email,@PathVariable("card") String card,@PathVariable("name") String name,@PathVariable("expirationDate") String expirationDate) {
+		try {
+			return new ResponseEntity<>(transactionService.createToken(email,card,name,expirationDate), HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("HTTP 403", HttpStatus.FORBIDDEN);

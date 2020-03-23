@@ -7,18 +7,21 @@ package com.payu.ecommerce.utils;
 
 import com.payu.ecommerce.model.Transaction;
 import com.payu.ecommerce.pojo.AdditionalValues;
+import com.payu.ecommerce.pojo.CreateToken;
 import com.payu.ecommerce.pojo.CreditCard;
+import com.payu.ecommerce.pojo.CreditCardToken;
 import com.payu.ecommerce.pojo.Merchant;
 import com.payu.ecommerce.pojo.Order;
 import com.payu.ecommerce.pojo.Payer;
 import com.payu.ecommerce.pojo.RequestTransaction;
+import com.payu.ecommerce.pojo.RequestTransactionToken;
+import com.payu.ecommerce.pojo.TransactionToken;
 import com.payu.ecommerce.pojo.TxValue;
 import com.payu.ecommerce.pojo.Utils;
 import com.payu.ecommerce.refund.RefundTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -54,6 +57,32 @@ public class TransactionJson {
 
 	}
 
+	/**
+	 * This function allows to create the request with the instance to map the payments api with Token
+	 * @return
+	 */
+	public RequestTransactionToken requestToken(String name, String email, String valor, String token) {
+
+		int numero = ThreadLocalRandom.current().nextInt(1, 1000000 + 1);
+		TxValue tXVALUE = new TxValue(Integer.parseInt(util.getTxValue()), util.getCurrency());
+		AdditionalValues additionalValues = new AdditionalValues(tXVALUE);
+		Order order = new Order(util.getOrderNumber(), util.getReferenceCode()+"TTT"+numero, util.getDescriptionOrder(), util.getLanguage(), additionalValues);
+		Payer payer = new Payer(util.getPayerNumber(), name, email, util.getContactNUmber(), util.getDniNumber());
+		Merchant merchant = new  Merchant(util.getMerchantApiLogin(), util.getMerchantApiKey());
+		TransactionToken transactionToken = new TransactionToken(order, payer, token, util.getType(), util.getPaymentMethod());
+		RequestTransactionToken requestTransactionToken = new RequestTransactionToken(util.getLanguage(), util.getCommand(), merchant, transactionToken, true);
+		System.out.println(requestTransactionToken.toString());
+		return requestTransactionToken;
+
+	}
+
+
+
+	/**
+	 * The function allow do refund in a transaction
+	 * @param transaction
+	 * @return
+	 */
 	public RefundTransaction requestRefund(Transaction transaction){
 
 		com.payu.ecommerce.refund.Order order = new com.payu.ecommerce.refund.Order(transaction.getOrderNumber());
@@ -68,4 +97,11 @@ public class TransactionJson {
 
 	}
 
+	public CreateToken requestCreateToken(String card, String name, String expirationDate){
+
+		CreditCardToken creditCardToken = new CreditCardToken(util.getPayerNumber(),name,util.getDniNumber(),util.getPaymentMethod(),card,util.getExpirationDate());
+		Merchant merchant = new  Merchant(util.getMerchantApiLogin(), util.getMerchantApiKey());
+		CreateToken createToken = new CreateToken(util.getLanguage(),"CREATE_TOKEN",merchant,creditCardToken);
+		return createToken;
+	}
 }
